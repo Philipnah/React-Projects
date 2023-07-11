@@ -15,7 +15,7 @@ function App() {
 			<Routes>
 				<Route exact path="/" Component={CreateGame} />
 				<Route path="/joingame" Component={JoinGame} />
-				<Route path="/game" Component={Game} />
+				<Route path="/game/:code" Component={Game} />
 			</Routes>
 			<Footer />
 		</Router>
