@@ -11,10 +11,7 @@ export default function CreateGame() {
 	const [codeCreated, setCodeCreated] = useState(false);
 
 	function removeIllegalChars(event) {
-		event.target.value = event.target.value.replaceAll(" ", "");
-		event.target.value = event.target.value.replaceAll("-", "");
-		event.target.value = event.target.value.replaceAll(".", "");
-		event.target.value = event.target.value.replaceAll(",", "");
+		event.target.value = event.target.value.toLowerCase().replace(/[^a-z]/g, '');
 	}
 
 	function createGameCode(){
@@ -27,8 +24,6 @@ export default function CreateGame() {
 	}
 
 	function createGameLink() {
-		// todo: add checks
-
 		if (word.length === 0 || name.length === 0){
 			console.log("Word or name is empty!");
 			return
@@ -37,8 +32,9 @@ export default function CreateGame() {
 		console.log("Word: " + word);
 		console.log("Name: " + name);
 
-		setGameUrl(currentUrl + "game/" + createGameCode());
-		navigator.clipboard.writeText(gameUrl).then(() => console.log("copied!"));
+		let gameUrl = currentUrl + "game/" + createGameCode();
+		setGameUrl(gameUrl);
+		navigator.clipboard.writeText(gameUrl).then(() => console.log(gameUrl));
 		setCodeCreated(true);
 
 		for (let i = 0; i < document.getElementsByTagName("input").length; i++) {
@@ -50,9 +46,9 @@ export default function CreateGame() {
 	function handleOnChange(event, type) {
 		removeIllegalChars(event);
 		if (type === "name"){
-			setName(event.target.value);
+			setName(event.target.value.toLowerCase());
 		} else if (type === "word"){
-			setWord(event.target.value);
+			setWord(event.target.value.toLowerCase());
 		}
 		setCodeCreated(false);
 	}
@@ -71,11 +67,10 @@ export default function CreateGame() {
 			<button onClick={() => createGameLink()} className="col-span-2 py-2 mx-auto my-4 w-full transition duration-300 rounded-md outline outline-2 outline-slate-500 hover:outline-none hover:bg-gray-700 hover:shadow-md">Create Link</button>
 
 			{codeCreated && 
-			// todo style this!!!
-			<>
-				<div className="col-span-2 text-center">Link has been copied to clipboard!</div>
-				<button onClick={() => copyUrlToClip()} className="col-span-2 text-center">Copy link again</button>
-			</>
+			<div className="col-span-2 text-center m-2">
+				<p className="">Link has been copied to clipboard!</p>
+				<button onClick={() => copyUrlToClip()} className="col-span-2 text-center underline">Copy link again</button>
+			</div>
 			}
 		</div>
 	);

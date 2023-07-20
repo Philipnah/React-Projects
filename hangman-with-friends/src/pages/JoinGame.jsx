@@ -29,10 +29,4 @@ export default function JoinGame() {
 		</div>
 	);
 
-	// todos for game page:
-
-	// todo: ability to: guess letters or word
-	// todo: amount of guesses label
-	// todo: reveal word button
-
 }
